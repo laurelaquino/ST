@@ -336,7 +336,7 @@ public class RegExp {
 			break;
 		//edited !!
 		case REGEXP_EOL:
-			a = BasicAutomata.makeEOL()
+			a = BasicAutomata.makeEOLAuto();
 		}
 		return a;
 	}
@@ -688,7 +688,7 @@ public class RegExp {
 				}
 			}
 		//edited !!
-		} else if(match('.')){
+	} else if(match('$')){
 			return makeEOL();
 		} else
 			return makeChar(parseCharExp());

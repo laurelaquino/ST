@@ -40,7 +40,7 @@ final public class BasicAutomata {
 	private BasicAutomata() {}
 
 	//edited !!
-	public static Automaton makeEOL() {
+	public static Automaton makeEOLAuto() {
 		Automaton a = new Automaton();
 
 		State s1 = new State();
@@ -48,18 +48,18 @@ final public class BasicAutomata {
 		State s3 = new State();
 		State s4 = new State();
 
-		s1.transitions.add(new Transition('/r', s2));
-		s1.transitions.add(new Transition('/n', s4));
+		s1.transitions.add(new Transition('\r', s2));
+		s1.transitions.add(new Transition('\n', s4));
 
-		s2.transitions.add(new Transition('/n', s4));
-		s2.transitions.add(new Transition('/r', s3));
+		s2.transitions.add(new Transition('\n', s4));
+		s2.transitions.add(new Transition('\r', s3));
 		s2.accept = true;
 
-		s3.transitions.add(new Transition('/r', s3));
-		s3.transitions.add(new Transition('/n', s3));
+		s3.transitions.add(new Transition('\r', s3));
+		s3.transitions.add(new Transition('\n', s3));
 
-		s4.transitions.add(new Transition('/r', s3));
-		s4.transitions.add(new Transition('/n', s3));
+		s4.transitions.add(new Transition('\r', s3));
+		s4.transitions.add(new Transition('\n', s3));
 		s4.accept = true;
 
 		a.initial = s1;
