@@ -1,9 +1,9 @@
 /*
  * Original license:
- * 
+ *
  * Copyright (c) 2001-2017 Anders Moeller
  * All rights reserved.
- * 
+ *
  * Redistribution and use in source and binary forms, with or without
  * modification, are permitted provided that the following conditions
  * are met:
@@ -14,7 +14,7 @@
  *    documentation and/or other materials provided with the distribution.
  * 3. The name of the author may not be used to endorse or promote products
  *    derived from this software without specific prior written permission.
- * 
+ *
  * THIS SOFTWARE IS PROVIDED BY THE AUTHOR ``AS IS'' AND ANY EXPRESS OR
  * IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES
  * OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
@@ -36,11 +36,40 @@ import java.util.Collection;
  * Construction of basic automata.
  */
 final public class BasicAutomata {
-	
+
 	private BasicAutomata() {}
 
-	/** 
-	 * Returns a new (deterministic) automaton with the empty language. 
+	//edited !!
+	public static Automaton makeEOL() {
+		Automaton a = new Automaton();
+
+		State s1 = new State();
+		State s2 = new State();
+		State s3 = new State();
+		State s4 = new State();
+
+		s1.transitions.add(new Transition('/r', s2));
+		s1.transitions.add(new Transition('/n', s4));
+
+		s2.transitions.add(new Transition('/n', s4));
+		s2.transitions.add(new Transition('/r', s3));
+		s2.accept = true;
+
+		s3.transitions.add(new Transition('/r', s3));
+		s3.transitions.add(new Transition('/n', s3));
+
+		s4.transitions.add(new Transition('/r', s3));
+		s4.transitions.add(new Transition('/n', s3));
+		s4.accept = true;
+
+		a.initial = s1;
+		a.deterministic = true;
+
+		return a;
+	}
+
+	/**
+	 * Returns a new (deterministic) automaton with the empty language.
 	 */
 	public static Automaton makeEmpty() {
 		Automaton a = new Automaton();
@@ -48,9 +77,9 @@ final public class BasicAutomata {
 		a.deterministic = true;
 		return a;
 	}
-	
-	/** 
-	 * Returns a new (deterministic) automaton that accepts only the empty string. 
+
+	/**
+	 * Returns a new (deterministic) automaton that accepts only the empty string.
 	 */
 	public static Automaton makeEmptyString() {
 		Automaton a = new Automaton();
@@ -58,9 +87,9 @@ final public class BasicAutomata {
 		a.deterministic = true;
 		return a;
 	}
-	
-	/** 
-	 * Returns a new (deterministic) automaton that accepts all strings. 
+
+	/**
+	 * Returns a new (deterministic) automaton that accepts all strings.
 	 */
 	public static Automaton makeAnyString()	{
 		Automaton a = new Automaton();
@@ -71,16 +100,16 @@ final public class BasicAutomata {
 		a.deterministic = true;
 		return a;
 	}
-	
-	/** 
-	 * Returns a new (deterministic) automaton that accepts any single character. 
+
+	/**
+	 * Returns a new (deterministic) automaton that accepts any single character.
 	 */
 	public static Automaton makeAnyChar() {
 		return makeCharRange(Character.MIN_VALUE, Character.MAX_VALUE);
 	}
-	
-	/** 
-	 * Returns a new (deterministic) automaton that accepts a single character of the given value. 
+
+	/**
+	 * Returns a new (deterministic) automaton that accepts a single character of the given value.
 	 */
 	public static Automaton makeChar(char c) {
 		Automaton a = new Automaton();
@@ -88,10 +117,10 @@ final public class BasicAutomata {
 		a.deterministic = true;
 		return a;
 	}
-	
-	/** 
-	 * Returns a new (deterministic) automaton that accepts a single char 
-	 * whose value is in the given interval (including both end points). 
+
+	/**
+	 * Returns a new (deterministic) automaton that accepts a single char
+	 * whose value is in the given interval (including both end points).
 	 */
 	public static Automaton makeCharRange(char min, char max) {
 		if (min == max)
@@ -106,9 +135,9 @@ final public class BasicAutomata {
 		a.deterministic = true;
 		return a;
 	}
-	
+
 	/**
-	 * Constructs sub-automaton corresponding to decimal numbers of 
+	 * Constructs sub-automaton corresponding to decimal numbers of
 	 * length x.substring(n).length().
 	 */
 	private static State anyOfRightLength(String x, int n) {
@@ -119,9 +148,9 @@ final public class BasicAutomata {
 			s.addTransition(new Transition('0', '9', anyOfRightLength(x, n + 1)));
 		return s;
 	}
-	
+
 	/**
-	 * Constructs sub-automaton corresponding to decimal numbers of value 
+	 * Constructs sub-automaton corresponding to decimal numbers of value
 	 * at least x.substring(n) and length x.substring(n).length().
 	 */
 	private static State atLeast(String x, int n, Collection<State> initials, boolean zeros) {
@@ -138,9 +167,9 @@ final public class BasicAutomata {
 		}
 		return s;
 	}
-	
+
 	/**
-	 * Constructs sub-automaton corresponding to decimal numbers of value 
+	 * Constructs sub-automaton corresponding to decimal numbers of value
 	 * at most x.substring(n) and length x.substring(n).length().
 	 */
 	private static State atMost(String x, int n) {
@@ -155,9 +184,9 @@ final public class BasicAutomata {
 		}
 		return s;
 	}
-	
+
 	/**
-	 * Constructs sub-automaton corresponding to decimal numbers of value 
+	 * Constructs sub-automaton corresponding to decimal numbers of value
 	 * between x.substring(n) and y.substring(n) and of
 	 * length x.substring(n).length() (which must be equal to y.substring(n).length()).
 	 */
@@ -181,9 +210,9 @@ final public class BasicAutomata {
 		}
 		return s;
 	}
-	
-	/** 
-	 * Returns a new automaton that accepts strings representing 
+
+	/**
+	 * Returns a new automaton that accepts strings representing
 	 * decimal non-negative integers in the given interval.
 	 * @param min minimal value of interval
 	 * @param max maximal value of inverval (both end points are included in the interval)
@@ -229,8 +258,8 @@ final public class BasicAutomata {
 		a.checkMinimizeAlways();
 		return a;
 	}
-	
-	/** 
+
+	/**
 	 * Returns a new (deterministic) automaton that accepts the single given string.
 	 */
 	public static Automaton makeString(String s) {
