@@ -67,4 +67,69 @@ public class Task4 {
         assertFalse(reg.matches("a", "$"));
     }
 
+    @Test
+    public void test13() {
+        assertTrue(reg.matches("bbbb\nab", ".*$.."));
+    }
+
+    @Test
+    public void test14() {
+        assertTrue(reg.matches("bbbb\nab", ".*$.."));
+    }
+
+    @Test
+    public void test15() {
+        assertTrue(reg.matches("", "$?"));
+    }
+
+    @Test
+    public void test16() {
+        assertTrue(reg.matches("\r\n", "$?"));
+    }
+
+    @Test
+    public void test17() {
+        assertTrue(reg.matches("\n\r", "$*"));
+    }
+
+    @Test
+    public void test18() {
+        assertTrue(reg.matches("\r\n\r\n", "${2}"));
+    }
+
+    @Test
+    public void test19() {
+        assertTrue(reg.matches("\r\n\r\n", "${4}"));
+    }
+
+    @Test
+    public void test20() {
+        assertTrue(reg.matches("\r\n\r\n", "${2,}"));
+    }
+
+    @Test
+    public void test21() {
+        assertTrue(reg.matches("\r\n\r\n", "${2,4}"));
+    }
+
+    @Test
+    public void test22() {
+        assertTrue(reg.matches("hi", "..~$"));
+    }
+
+    @Test
+    public void test23() {
+        assertTrue(reg.matches("aaa\n\nbbb", "[a-c]*$*[b-c]+"));
+    }
+
+    @Test
+    public void test24() {
+        assertTrue(reg.matches("\n5\n5\n5", "($<1-10>)*"));
+    }
+
+    @Test
+    public void test25() {
+        assertTrue(reg.matches("$$$", "\$\$\$"));
+    }
+
 }
