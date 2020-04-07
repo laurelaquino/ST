@@ -74,7 +74,7 @@ public class Task4 {
 
     @Test
     public void test14() {
-        assertTrue(reg.matches("bbbb\nab", ".*$.."));
+        assertTrue(reg.matches("(\r\nhello\n)\r", "\($[a-z]{1-20}$\)$"));
     }
 
     @Test
@@ -130,6 +130,31 @@ public class Task4 {
     @Test
     public void test25() {
         assertTrue(reg.matches("$$$", "\$\$\$"));
+    }
+
+    @Test
+    public void test26() {
+        assertTrue(reg.matches("\n", "[^ a-z A-Z 1-999]"));
+    }
+
+    @Test
+    public void test27() {
+        assertTrue(reg.matches("rrrrrrrrrr\r\nnnnnnnnnnnn", ".+$.*"));
+    }
+
+    @Test
+    public void test28() {
+        assertFalse(reg.matches("\n*", "$*"));
+    }
+
+    @Test
+    public void test29() {
+        assertFalse(reg.matches("hello  world", "hello$world"));
+    }
+
+    @Test
+    public void test30() {
+        assertTrue(reg.matches("t\ne\r\ns\rt", ".$.$.$."));
     }
 
 }
