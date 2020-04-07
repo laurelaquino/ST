@@ -20,4 +20,9 @@ public class Task1 {
     public void test3() {
         assertTrue(reg.matches("\r\n", "$"));
     }
+
+    @Test
+    public void test4() {
+        assertTrue(reg.matches("a\naaa\r\n", "(a+$)+"));
+    }
 }
